@@ -52,6 +52,7 @@ class ChatUserViewModel extends ChangeNotifier {
   /// Met à jour le profil de l'utilisateur connecté
   Future<void> updateUserProfile({
     String? displayName,
+    String? bio,
     String? avatarBase64,
   }) async {
     _isLoading = true;
@@ -66,6 +67,7 @@ class ChatUserViewModel extends ChangeNotifier {
 
       final updates = <String, dynamic>{};
       if (displayName != null) updates['displayName'] = displayName;
+      if (bio != null) updates['bio'] = bio;
       if (avatarBase64 != null) updates['avatarBase64'] = avatarBase64;
       updates['updatedAt'] = FieldValue.serverTimestamp();
 

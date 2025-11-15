@@ -250,6 +250,7 @@ class _ProfilePageState extends State<ProfilePage> {
   /// Sauvegarde le profil
   Future<void> _saveProfile() async {
     final displayName = _displayNameController.text.trim();
+    final bio = _bioController.text.trim();
     
     if (displayName.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
@@ -265,6 +266,7 @@ class _ProfilePageState extends State<ProfilePage> {
     
     await chatUserViewModel.updateUserProfile(
       displayName: displayName,
+      bio: bio,
       avatarBase64: _newAvatarBase64,
     );
 

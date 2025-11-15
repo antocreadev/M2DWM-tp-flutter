@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:grouped_list/grouped_list.dart';
 import 'package:intl/intl.dart';
+import 'dart:convert';
+import 'dart:typed_data';
 import '../model/chat_user.dart';
 import '../model/message.dart';
 import '../viewmodel/chat_viewmodel.dart';
@@ -51,16 +53,7 @@ class _ChatPageState extends State<ChatPage> {
       appBar: AppBar(
         title: Row(
           children: [
-            CircleAvatar(
-              radius: 18,
-              backgroundColor: AppConstants.primaryLight,
-              child: Text(
-                widget.otherUser.displayName.isNotEmpty
-                    ? widget.otherUser.displayName[0].toUpperCase()
-                    : '?',
-                style: const TextStyle(color: Colors.white),
-              ),
-            ),
+            _buildAvatar(),
             const SizedBox(width: 12),
             Expanded(
               child: Column(
@@ -340,5 +333,32 @@ class _ChatPageState extends State<ChatPage> {
         curve: Curves.easeOut,
       );
     }
+  }
+
+  /// Construit l'avatar de l'utilisateur dans l'AppBar
+  Widget _buildAvatar() {
+    if (widget.otherUser.avatarBase64.isNotEmpty) {
+      try {
+        final Uint8List bytes = base64Decode(widget.otherUser.avatarBase64);
+        return CircleAvatar(
+          radius: 18,
+          backgroundImage: MemoryImage(bytes),
+        );
+      } catch (e) {
+        debugPrint('❌ Erreur décodage avatar: $e');
+      }
+    }
+
+    // Avatar par défaut avec initiale
+    return CircleAvatar(
+      radius: 18,
+      backgroundColor: AppConstants.primaryLight,
+      child: Text(
+        widget.otherUser.displayName.isNotEmpty
+            ? widget.otherUser.displayName[0].toUpperCase()
+            : '?',
+        style: const TextStyle(color: Colors.white),
+      ),
+    );
   }
 }

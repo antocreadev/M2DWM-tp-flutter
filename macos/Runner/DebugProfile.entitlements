@@ -14,5 +14,9 @@
 	<array>
 		<string>$(AppIdentifierPrefix)com.uc.chatapp.chatApp</string>
 	</array>
+	<key>com.apple.security.assets.pictures.read-write</key>
+	<true/>
+	<key>com.apple.security.files.user-selected.read-only</key>
+	<true/>
 </dict>
 </plist>
