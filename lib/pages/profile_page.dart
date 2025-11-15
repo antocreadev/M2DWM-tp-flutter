@@ -21,7 +21,7 @@ class _ProfilePageState extends State<ProfilePage> {
   final TextEditingController _displayNameController = TextEditingController();
   final TextEditingController _bioController = TextEditingController();
   final ImagePicker _imagePicker = ImagePicker();
-  
+
   ChatUser? _currentUser;
   String? _newAvatarBase64;
   bool _isLoading = true;
@@ -36,7 +36,7 @@ class _ProfilePageState extends State<ProfilePage> {
   Future<void> _loadUserProfile() async {
     final chatUserViewModel = context.read<ChatUserViewModel>();
     final user = await chatUserViewModel.getCurrentUser();
-    
+
     if (user != null) {
       setState(() {
         _currentUser = user;
@@ -105,7 +105,11 @@ class _ProfilePageState extends State<ProfilePage> {
               radius: 20,
               backgroundColor: AppConstants.primaryColor,
               child: IconButton(
-                icon: const Icon(Icons.camera_alt, color: Colors.white, size: 20),
+                icon: const Icon(
+                  Icons.camera_alt,
+                  color: Colors.white,
+                  size: 20,
+                ),
                 padding: EdgeInsets.zero,
                 onPressed: _pickImage,
               ),
@@ -119,7 +123,7 @@ class _ProfilePageState extends State<ProfilePage> {
   /// Avatar de l'utilisateur
   Widget _buildAvatar() {
     final avatarBase64 = _newAvatarBase64 ?? _currentUser?.avatarBase64 ?? '';
-    
+
     if (avatarBase64.isNotEmpty && ImageHelper.isValidBase64(avatarBase64)) {
       try {
         final Uint8List bytes = base64Decode(avatarBase64);
@@ -185,10 +189,7 @@ class _ProfilePageState extends State<ProfilePage> {
     return OutlinedButton.icon(
       onPressed: _logout,
       icon: const Icon(Icons.logout, color: Colors.red),
-      label: const Text(
-        'Se déconnecter',
-        style: TextStyle(color: Colors.red),
-      ),
+      label: const Text('Se déconnecter', style: TextStyle(color: Colors.red)),
       style: OutlinedButton.styleFrom(
         side: const BorderSide(color: Colors.red),
         padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 32),
@@ -221,7 +222,9 @@ class _ProfilePageState extends State<ProfilePage> {
         if (mounted) {
           ScaffoldMessenger.of(context).showSnackBar(
             const SnackBar(
-              content: Text('Image trop volumineuse. Veuillez choisir une image plus petite.'),
+              content: Text(
+                'Image trop volumineuse. Veuillez choisir une image plus petite.',
+              ),
               backgroundColor: Colors.red,
             ),
           );
@@ -233,7 +236,9 @@ class _ProfilePageState extends State<ProfilePage> {
         _newAvatarBase64 = base64String;
       });
 
-      debugPrint('✅ Image sélectionnée: ${ImageHelper.getBase64SizeInKB(base64String).toStringAsFixed(2)} KB');
+      debugPrint(
+        '✅ Image sélectionnée: ${ImageHelper.getBase64SizeInKB(base64String).toStringAsFixed(2)} KB',
+      );
     } catch (e) {
       debugPrint('❌ Erreur lors de la sélection de l\'image: $e');
       if (mounted) {
@@ -251,7 +256,7 @@ class _ProfilePageState extends State<ProfilePage> {
   Future<void> _saveProfile() async {
     final displayName = _displayNameController.text.trim();
     final bio = _bioController.text.trim();
-    
+
     if (displayName.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
@@ -263,7 +268,7 @@ class _ProfilePageState extends State<ProfilePage> {
     }
 
     final chatUserViewModel = context.read<ChatUserViewModel>();
-    
+
     await chatUserViewModel.updateUserProfile(
       displayName: displayName,
       bio: bio,
@@ -304,7 +309,10 @@ class _ProfilePageState extends State<ProfilePage> {
           ),
           TextButton(
             onPressed: () => Navigator.of(context).pop(true),
-            child: const Text('Déconnexion', style: TextStyle(color: Colors.red)),
+            child: const Text(
+              'Déconnexion',
+              style: TextStyle(color: Colors.red),
+            ),
           ),
         ],
       ),
@@ -314,7 +322,9 @@ class _ProfilePageState extends State<ProfilePage> {
       final authViewModel = context.read<AuthViewModel>();
       await authViewModel.logout();
       if (mounted) {
-        Navigator.of(context).pushNamedAndRemoveUntil('/login', (route) => false);
+        Navigator.of(
+          context,
+        ).pushNamedAndRemoveUntil('/login', (route) => false);
       }
     }
   }

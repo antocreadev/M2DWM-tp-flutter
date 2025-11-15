@@ -47,7 +47,9 @@ class _LoginPageState extends State<LoginPage> {
         // Afficher le message d'erreur
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text(authViewModel.errorMessage ?? AppConstants.loginError),
+            content: Text(
+              authViewModel.errorMessage ?? AppConstants.loginError,
+            ),
             backgroundColor: AppConstants.errorColor,
           ),
         );
@@ -115,7 +117,9 @@ class _LoginPageState extends State<LoginPage> {
                       prefixIcon: const Icon(Icons.lock),
                       suffixIcon: IconButton(
                         icon: Icon(
-                          _obscurePassword ? Icons.visibility : Icons.visibility_off,
+                          _obscurePassword
+                              ? Icons.visibility
+                              : Icons.visibility_off,
                         ),
                         onPressed: () {
                           setState(() {
@@ -142,14 +146,18 @@ class _LoginPageState extends State<LoginPage> {
                       return SizedBox(
                         width: double.infinity,
                         child: ElevatedButton(
-                          onPressed: authViewModel.isLoading ? null : _handleLogin,
+                          onPressed: authViewModel.isLoading
+                              ? null
+                              : _handleLogin,
                           child: authViewModel.isLoading
                               ? const SizedBox(
                                   height: 20,
                                   width: 20,
                                   child: CircularProgressIndicator(
                                     strokeWidth: 2,
-                                    valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+                                    valueColor: AlwaysStoppedAnimation<Color>(
+                                      Colors.white,
+                                    ),
                                   ),
                                 )
                               : const Text(AppConstants.loginButton),
@@ -167,7 +175,9 @@ class _LoginPageState extends State<LoginPage> {
                       TextButton(
                         onPressed: () {
                           Navigator.of(context).push(
-                            MaterialPageRoute(builder: (context) => const SignupPage()),
+                            MaterialPageRoute(
+                              builder: (context) => const SignupPage(),
+                            ),
                           );
                         },
                         child: const Text(AppConstants.signupButton),

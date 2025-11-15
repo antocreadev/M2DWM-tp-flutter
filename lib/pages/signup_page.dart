@@ -53,7 +53,9 @@ class _SignupPageState extends State<SignupPage> {
         // Afficher le message d'erreur
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text(authViewModel.errorMessage ?? AppConstants.signupError),
+            content: Text(
+              authViewModel.errorMessage ?? AppConstants.signupError,
+            ),
             backgroundColor: AppConstants.errorColor,
           ),
         );
@@ -64,9 +66,7 @@ class _SignupPageState extends State<SignupPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text(AppConstants.signupTitle),
-      ),
+      appBar: AppBar(title: const Text(AppConstants.signupTitle)),
       body: SafeArea(
         child: Center(
           child: SingleChildScrollView(
@@ -140,7 +140,9 @@ class _SignupPageState extends State<SignupPage> {
                       prefixIcon: const Icon(Icons.lock),
                       suffixIcon: IconButton(
                         icon: Icon(
-                          _obscurePassword ? Icons.visibility : Icons.visibility_off,
+                          _obscurePassword
+                              ? Icons.visibility
+                              : Icons.visibility_off,
                         ),
                         onPressed: () {
                           setState(() {
@@ -170,7 +172,9 @@ class _SignupPageState extends State<SignupPage> {
                       prefixIcon: const Icon(Icons.lock_outline),
                       suffixIcon: IconButton(
                         icon: Icon(
-                          _obscureConfirmPassword ? Icons.visibility : Icons.visibility_off,
+                          _obscureConfirmPassword
+                              ? Icons.visibility
+                              : Icons.visibility_off,
                         ),
                         onPressed: () {
                           setState(() {
@@ -197,14 +201,18 @@ class _SignupPageState extends State<SignupPage> {
                       return SizedBox(
                         width: double.infinity,
                         child: ElevatedButton(
-                          onPressed: authViewModel.isLoading ? null : _handleSignup,
+                          onPressed: authViewModel.isLoading
+                              ? null
+                              : _handleSignup,
                           child: authViewModel.isLoading
                               ? const SizedBox(
                                   height: 20,
                                   width: 20,
                                   child: CircularProgressIndicator(
                                     strokeWidth: 2,
-                                    valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+                                    valueColor: AlwaysStoppedAnimation<Color>(
+                                      Colors.white,
+                                    ),
                                   ),
                                 )
                               : const Text(AppConstants.signupButton),

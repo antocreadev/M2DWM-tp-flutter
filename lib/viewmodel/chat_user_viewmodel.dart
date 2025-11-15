@@ -24,10 +24,7 @@ class ChatUserViewModel extends ChangeNotifier {
       return Stream.value([]);
     }
 
-    return _firestore
-        .collection('users')
-        .snapshots()
-        .map((snapshot) {
+    return _firestore.collection('users').snapshots().map((snapshot) {
       return snapshot.docs
           .map((doc) => ChatUser.fromMap(doc.data()))
           .where((user) => user.id != currentUid)

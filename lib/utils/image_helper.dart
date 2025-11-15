@@ -35,14 +35,14 @@ class ImageHelper {
     int maxSizeInBytes = 500000, // 500KB par défaut
   }) async {
     final bytes = await file.readAsBytes();
-    
+
     // Vérifier la taille
     if (bytes.length > maxSizeInBytes) {
       // TODO: Implémenter une compression d'image si nécessaire
       // Pour l'instant, on refuse les images trop grandes
       return null;
     }
-    
+
     return base64Encode(bytes);
   }
 

@@ -109,10 +109,10 @@ class ChatViewModel extends ChangeNotifier {
         .orderBy('timestamp', descending: false)
         .snapshots()
         .map((snapshot) {
-      return snapshot.docs
-          .map((doc) => Message.fromMap(doc.data()))
-          .toList();
-    });
+          return snapshot.docs
+              .map((doc) => Message.fromMap(doc.data()))
+              .toList();
+        });
   }
 
   /// Récupère la liste des chats de l'utilisateur
@@ -128,9 +128,9 @@ class ChatViewModel extends ChangeNotifier {
         .orderBy('lastMessageTime', descending: true)
         .snapshots()
         .map((snapshot) {
-      return snapshot.docs
-          .map((doc) => Chat.fromMap(doc.data(), doc.id))
-          .toList();
-    });
+          return snapshot.docs
+              .map((doc) => Chat.fromMap(doc.data(), doc.id))
+              .toList();
+        });
   }
 }

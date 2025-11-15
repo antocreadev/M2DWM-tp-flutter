@@ -16,7 +16,9 @@ class LoadingScreen extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             const CircularProgressIndicator(
-              valueColor: AlwaysStoppedAnimation<Color>(AppConstants.primaryColor),
+              valueColor: AlwaysStoppedAnimation<Color>(
+                AppConstants.primaryColor,
+              ),
             ),
             if (message != null) ...[
               const SizedBox(height: AppConstants.largePadding),

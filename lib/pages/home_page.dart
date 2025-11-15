@@ -24,9 +24,7 @@ class HomePage extends StatelessWidget {
             icon: const Icon(Icons.person),
             onPressed: () {
               Navigator.of(context).push(
-                MaterialPageRoute(
-                  builder: (context) => const ProfilePage(),
-                ),
+                MaterialPageRoute(builder: (context) => const ProfilePage()),
               );
             },
           ),
@@ -98,10 +96,7 @@ class _UserListTile extends StatelessWidget {
       leading: _buildAvatar(),
       title: Text(
         user.displayName,
-        style: const TextStyle(
-          fontWeight: FontWeight.w600,
-          fontSize: 16,
-        ),
+        style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 16),
       ),
       subtitle: user.bio.isNotEmpty
           ? Text(
@@ -114,9 +109,7 @@ class _UserListTile extends StatelessWidget {
       trailing: const Icon(Icons.chevron_right),
       onTap: () {
         Navigator.of(context).push(
-          MaterialPageRoute(
-            builder: (context) => ChatPage(otherUser: user),
-          ),
+          MaterialPageRoute(builder: (context) => ChatPage(otherUser: user)),
         );
       },
     );
@@ -127,10 +120,7 @@ class _UserListTile extends StatelessWidget {
     if (user.avatarBase64.isNotEmpty) {
       try {
         final Uint8List bytes = base64Decode(user.avatarBase64);
-        return CircleAvatar(
-          radius: 24,
-          backgroundImage: MemoryImage(bytes),
-        );
+        return CircleAvatar(radius: 24, backgroundImage: MemoryImage(bytes));
       } catch (e) {
         debugPrint('❌ Erreur décodage avatar: $e');
       }
@@ -151,4 +141,3 @@ class _UserListTile extends StatelessWidget {
     );
   }
 }
-

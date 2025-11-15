@@ -60,11 +60,13 @@ class AppConstants {
   static const String emailRequired = 'L\'email est requis';
   static const String emailInvalid = 'Email invalide';
   static const String passwordRequired = 'Le mot de passe est requis';
-  static const String passwordTooShort = 'Le mot de passe doit contenir au moins 6 caractères';
+  static const String passwordTooShort =
+      'Le mot de passe doit contenir au moins 6 caractères';
   static const String displayNameRequired = 'Le nom est requis';
   static const String loginError = 'Erreur de connexion';
   static const String signupError = 'Erreur lors de l\'inscription';
-  static const String updateProfileError = 'Erreur lors de la mise à jour du profil';
+  static const String updateProfileError =
+      'Erreur lors de la mise à jour du profil';
   static const String sendMessageError = 'Erreur lors de l\'envoi du message';
 
   // Durées

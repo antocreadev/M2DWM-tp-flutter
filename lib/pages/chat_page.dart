@@ -84,9 +84,7 @@ class _ChatPageState extends State<ChatPage> {
           ? const Center(child: CircularProgressIndicator())
           : Column(
               children: [
-                Expanded(
-                  child: _buildMessagesList(),
-                ),
+                Expanded(child: _buildMessagesList()),
                 _buildMessageInput(),
               ],
             ),
@@ -155,7 +153,7 @@ class _ChatPageState extends State<ChatPage> {
     final now = DateTime.now();
     final today = DateTime(now.year, now.month, now.day);
     final yesterday = today.subtract(const Duration(days: 1));
-    
+
     String dateText;
     if (date == today) {
       dateText = 'Aujourd\'hui';
@@ -168,10 +166,7 @@ class _ChatPageState extends State<ChatPage> {
     return Center(
       child: Container(
         margin: const EdgeInsets.symmetric(vertical: 10),
-        padding: const EdgeInsets.symmetric(
-          horizontal: 16,
-          vertical: 6,
-        ),
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
         decoration: BoxDecoration(
           color: Colors.grey[300],
           borderRadius: BorderRadius.circular(20),
@@ -197,10 +192,7 @@ class _ChatPageState extends State<ChatPage> {
       alignment: isMyMessage ? Alignment.centerRight : Alignment.centerLeft,
       child: Container(
         margin: const EdgeInsets.symmetric(vertical: 4),
-        padding: const EdgeInsets.symmetric(
-          horizontal: 16,
-          vertical: 10,
-        ),
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
         constraints: BoxConstraints(
           maxWidth: MediaQuery.of(context).size.width * 0.7,
         ),
@@ -316,9 +308,9 @@ class _ChatPageState extends State<ChatPage> {
     if (content.isEmpty || _chatId == null) return;
 
     final chatViewModel = context.read<ChatViewModel>();
-    
+
     _messageController.clear();
-    
+
     await chatViewModel.sendMessage(
       chatId: _chatId!,
       receiverId: widget.otherUser.id,
@@ -340,10 +332,7 @@ class _ChatPageState extends State<ChatPage> {
     if (widget.otherUser.avatarBase64.isNotEmpty) {
       try {
         final Uint8List bytes = base64Decode(widget.otherUser.avatarBase64);
-        return CircleAvatar(
-          radius: 18,
-          backgroundImage: MemoryImage(bytes),
-        );
+        return CircleAvatar(radius: 18, backgroundImage: MemoryImage(bytes));
       } catch (e) {
         debugPrint('❌ Erreur décodage avatar: $e');
       }

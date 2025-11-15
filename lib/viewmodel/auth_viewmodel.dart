@@ -61,7 +61,7 @@ class AuthViewModel extends ChangeNotifier {
 
     try {
       debugPrint('🔵 Début inscription: $email');
-      
+
       // Créer le compte Firebase Auth
       final userCredential = await _auth.createUserWithEmailAndPassword(
         email: email,
@@ -105,10 +105,7 @@ class AuthViewModel extends ChangeNotifier {
   }
 
   /// Connexion d'un utilisateur existant
-  Future<bool> login({
-    required String email,
-    required String password,
-  }) async {
+  Future<bool> login({required String email, required String password}) async {
     _setLoading(true);
     _errorMessage = null;
 
