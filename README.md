@@ -1,6 +1,9 @@
 # Chat App - Application de messagerie Flutter
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/AGlTNIfGhUk?si=TDILEPuNId3BQkpi" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+[![M2DWM TP FLUTTER ANTHONY MENGHI](cover-readme-video.png)](https://youtu.be/AGlTNIfGhUk "M2DWM TP FLUTTER ANTHONY MENGHI")
+
+Lien vers vidéo de présentation :
+https://youtu.be/AGlTNIfGhUk
 
 > **Projet réalisé dans le cadre du cours Flutter & Firebase**  
 > Université de Corse - Master 2 DFS - 2025/2026  
