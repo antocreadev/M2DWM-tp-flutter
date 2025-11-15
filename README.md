@@ -1,8 +1,6 @@
 # Chat App - Application de messagerie Flutter
 
-
-![video-tp-flutter-anthony-menghi.mp4](video-tp-flutter-anthony-menghi.mp4)
-
+<iframe width="560" height="315" src="https://www.youtube.com/embed/AGlTNIfGhUk?si=TDILEPuNId3BQkpi" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 
 > **Projet réalisé dans le cadre du cours Flutter & Firebase**  
 > Université de Corse - Master 2 DFS - 2025/2026  
@@ -221,6 +219,7 @@ flutter run -d android
 **Décision** : Les images de profil sont stockées en base64 directement dans Firestore.
 
 **Avantages** :
+
 - C'est gratuit et évite de mettre la carte bancaire
 
 **Limitations** :
@@ -237,7 +236,6 @@ flutter run -d android
 - `ViewModel` hérite de `ChangeNotifier`
 - `Provider` injecte les ViewModels dans l'arbre de widgets
 - `Consumer` écoute les changements et reconstruit l'UI
-
 
 ## 📸 Captures d'écran
 
