@@ -1,10 +1,29 @@
+// =============================================================================
+// signup_page.dart - PAGE : INSCRIPTION
+// =============================================================================
+// Formulaire d'inscription pour créer un nouveau compte utilisateur.
+// Collecte : nom complet, email, mot de passe et confirmation du mot de passe.
+//
+// Même pattern que LoginPage : utilise AuthViewModel via Provider.
+//
+// Navigation :
+//   - Succès -> HomePage (avec suppression de toute la pile de navigation)
+//   - Lien "Déjà un compte ?" -> retour à LoginPage
+// =============================================================================
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../constants.dart';
 import '../viewmodel/auth_viewmodel.dart';
 import 'home_page.dart';
 
-/// Page d'inscription
+/// Page d'inscription avec formulaire complet.
+///
+/// Contient 4 champs :
+/// - Nom complet (displayName)
+/// - Email
+/// - Mot de passe
+/// - Confirmation du mot de passe
 class SignupPage extends StatefulWidget {
   const SignupPage({Key? key}) : super(key: key);
 
@@ -13,16 +32,22 @@ class SignupPage extends StatefulWidget {
 }
 
 class _SignupPageState extends State<SignupPage> {
+  // Clé de formulaire pour la validation groupée
   final _formKey = GlobalKey<FormState>();
+
+  // Contrôleurs pour chaque champ de saisie
   final _displayNameController = TextEditingController();
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
   final _confirmPasswordController = TextEditingController();
+
+  // États pour la visibilité des mots de passe
   bool _obscurePassword = true;
   bool _obscureConfirmPassword = true;
 
   @override
   void dispose() {
+    // Libérer la mémoire des contrôleurs
     _displayNameController.dispose();
     _emailController.dispose();
     _passwordController.dispose();
@@ -30,7 +55,14 @@ class _SignupPageState extends State<SignupPage> {
     super.dispose();
   }
 
-  /// Valide et soumet le formulaire d'inscription
+  /// Valide le formulaire et crée un nouveau compte via AuthViewModel.
+  ///
+  /// Flux :
+  /// 1. Valide tous les champs (nom non vide, email valide, mots de passe identiques)
+  /// 2. Appelle authViewModel.signUp() (Firebase Auth + Firestore)
+  /// 3. Si succès -> redirige vers HomePage avec pushAndRemoveUntil
+  ///    (supprime TOUTE la pile de navigation pour empêcher le retour)
+  /// 4. Si échec -> affiche un SnackBar avec le message d'erreur
   Future<void> _handleSignup() async {
     if (_formKey.currentState!.validate()) {
       final authViewModel = Provider.of<AuthViewModel>(context, listen: false);
@@ -44,13 +76,15 @@ class _SignupPageState extends State<SignupPage> {
       if (!mounted) return;
 
       if (success) {
-        // Inscription réussie, rediriger vers HomePage
+        // Inscription réussie -> naviguer vers HomePage
+        // pushAndRemoveUntil supprime toutes les pages précédentes de la pile
+        // L'utilisateur ne pourra pas revenir à l'écran d'inscription avec "retour"
         Navigator.of(context).pushAndRemoveUntil(
           MaterialPageRoute(builder: (context) => const HomePage()),
-          (route) => false,
+          (route) => false, // false = supprimer TOUTES les routes précédentes
         );
       } else {
-        // Afficher le message d'erreur
+        // Inscription échouée -> afficher le message d'erreur
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text(
@@ -66,6 +100,7 @@ class _SignupPageState extends State<SignupPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      // AppBar avec titre "Inscription" et bouton retour automatique
       appBar: AppBar(title: const Text(AppConstants.signupTitle)),
       body: SafeArea(
         child: Center(
@@ -76,7 +111,7 @@ class _SignupPageState extends State<SignupPage> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  // Logo
+                  // --- Icône d'ajout de personne ---
                   Icon(
                     Icons.person_add_rounded,
                     size: 80,
@@ -84,7 +119,7 @@ class _SignupPageState extends State<SignupPage> {
                   ),
                   const SizedBox(height: AppConstants.largePadding),
 
-                  // Titre
+                  // --- Titre ---
                   Text(
                     AppConstants.signupTitle,
                     style: TextStyle(
@@ -95,7 +130,7 @@ class _SignupPageState extends State<SignupPage> {
                   ),
                   const SizedBox(height: AppConstants.largePadding),
 
-                  // Champ Nom complet
+                  // --- Champ Nom complet ---
                   TextFormField(
                     controller: _displayNameController,
                     decoration: const InputDecoration(
@@ -111,7 +146,7 @@ class _SignupPageState extends State<SignupPage> {
                   ),
                   const SizedBox(height: AppConstants.defaultPadding),
 
-                  // Champ Email
+                  // --- Champ Email ---
                   TextFormField(
                     controller: _emailController,
                     keyboardType: TextInputType.emailAddress,
@@ -131,7 +166,7 @@ class _SignupPageState extends State<SignupPage> {
                   ),
                   const SizedBox(height: AppConstants.defaultPadding),
 
-                  // Champ Mot de passe
+                  // --- Champ Mot de passe ---
                   TextFormField(
                     controller: _passwordController,
                     obscureText: _obscurePassword,
@@ -163,7 +198,8 @@ class _SignupPageState extends State<SignupPage> {
                   ),
                   const SizedBox(height: AppConstants.defaultPadding),
 
-                  // Champ Confirmation mot de passe
+                  // --- Champ Confirmation du mot de passe ---
+                  // Ce champ vérifie que l'utilisateur a bien tapé le même mot de passe
                   TextFormField(
                     controller: _confirmPasswordController,
                     obscureText: _obscureConfirmPassword,
@@ -187,6 +223,7 @@ class _SignupPageState extends State<SignupPage> {
                       if (value == null || value.isEmpty) {
                         return 'Veuillez confirmer le mot de passe';
                       }
+                      // Vérifie que la confirmation correspond au mot de passe saisi
                       if (value != _passwordController.text) {
                         return 'Les mots de passe ne correspondent pas';
                       }
@@ -195,14 +232,15 @@ class _SignupPageState extends State<SignupPage> {
                   ),
                   const SizedBox(height: AppConstants.largePadding),
 
-                  // Bouton d'inscription
+                  // --- Bouton d'inscription ---
+                  // Consumer écoute le ViewModel pour réagir à isLoading
                   Consumer<AuthViewModel>(
                     builder: (context, authViewModel, child) {
                       return SizedBox(
                         width: double.infinity,
                         child: ElevatedButton(
                           onPressed: authViewModel.isLoading
-                              ? null
+                              ? null // Désactivé pendant le chargement
                               : _handleSignup,
                           child: authViewModel.isLoading
                               ? const SizedBox(
@@ -222,13 +260,14 @@ class _SignupPageState extends State<SignupPage> {
                   ),
                   const SizedBox(height: AppConstants.defaultPadding),
 
-                  // Lien vers la connexion
+                  // --- Lien vers la page de connexion ---
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       const Text(AppConstants.hasAccount),
                       TextButton(
                         onPressed: () {
+                          // pop() revient à la page précédente (LoginPage)
                           Navigator.of(context).pop();
                         },
                         child: const Text(AppConstants.loginButton),
